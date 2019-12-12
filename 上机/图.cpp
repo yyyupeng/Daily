@@ -103,22 +103,29 @@ void dfs_(Graph G)
 {
     memset(book, 0, MAXVEX);
     std::stack<int> S;
-    S.push(0);
-    while(!S.empty())
+    int i;
+    for(i = 0; i < G.vernum; ++i)
     {
-        int n = S.top();
-        S.pop();
-        if(!book[n])
+        if(!book[i])
         {
-            book[n] = 1;
-            printf("%d ", G.adjList[n].data);
-        }
-        EdgeNode *e = G.adjList[n].firstedge;
-        while(e)
-        {
-            if(!book[e->adjvex])
-                S.push(e->adjvex);
-            e = e->next;
+            S.push(G.adjList[i].data);
+            while(!S.empty())
+            {
+                int n = S.top();
+                S.pop();
+                if(!book[n])
+                {
+                    book[n] = 1;
+                    printf("%d ", G.adjList[n].data);
+                }
+                EdgeNode *e = G.adjList[n].firstedge;
+                while(e)
+                {
+                    if(!book[e->adjvex])
+                        S.push(e->adjvex);
+                    e = e->next;
+                }
+            }
         }
     }
     printf("\n");
