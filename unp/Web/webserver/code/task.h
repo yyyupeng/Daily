@@ -2,10 +2,10 @@
 #define _TASK_H
 
 #include "include.h"
+#include "http.h"
 
 const char *path = "/home/liyupeng/Daily/unp/Web/webserver";
 const int BUFFER_SIZE = 4096;
-using namespace std;
 
 class task
 {
@@ -158,86 +158,106 @@ void task::response_post(char *text, char *ar)
 
 void task::doit()
 {
-    char buf[BUFFER_SIZE];
-    int size;
-    //读取解析请求
+    char buffer[BUFFER_SIZE];
+    memset(buffer,'\0',BUFFER_SIZE);
+    int data_read = 0;
+    int read_index = 0;         //已经读取到的数据
+    int checked_index = 0;      //当前已经分析多少数据
+    int start_line = 0;         //记录行在buffer中的起始数据
+    //初始化主状态机的状态 
+    CHECK_STATE checkstate = CHECK_STATE_REQUESTLINE;
     while(1)
     {
-        size = recv(connfd, buf, BUFFER_SIZE - 1, 0);   //接受请求
-        cout << "size: " << size << "\n" << buf;
-        if(size > 0)//如果有数据的话
-		{
-			char method[5];     //请求方法
-			char filename[50];  //文件
-			int i = 0, j = 0;
-			while(buf[j] != ' ' && buf[j] != '\0')      //获取请求方法
-			{
-				method[i++] = buf[j++];
-			}
-			++j;
-			method[i] = '\0';
-			i = 0;
-			while(buf[j] != ' ' && buf[j] != '\0')      //请求文件
-			{
-				filename[i++] = buf[j++];
-			}
-			filename[i] = '\0';
-            cout << "method:" << method << ' ' << "filename:" << filename << endl;
+        data_read = recv(connfd, buffer + read_index, BUFFER_SIZE - read_index, 0);
+        cout << data_read << endl;
+        cout << buffer << endl;
+        if(data_read == -1)
+        {
+            cout << "read failed" << endl;
+            break;
+        }
+        else if(data_read == 0)
+        {
+            cout << "Remote client has closedd the connection " << endl;
+            break;
+        }
+        read_index += data_read;
+        char buf[BUFFER_SIZE];
+        strncpy(buf, buffer, data_read);
 
-			if(strcasecmp(method, "GET") == 0)          //如果是get方法
+		char filename[50];  //文件
+		int i = 0, j = 0;
+        while(buffer[j] != ' ' && buffer[j] != '\0')    
+        {
+            ++i;
+            ++j;
+        }
+		++j;
+		i = 0;
+		while(buffer[j] != ' ' && buffer[j] != '\0')      //请求文件
+		{
+            filename[i++] = buffer[j++];
+		}
+		filename[i] = '\0';
+        cout << "filename:" << filename << endl;
+        
+        //分析目前已获得的所有客户数据 
+        HTTP_CODE result = parse_content(buf,checked_index,checkstate,read_index,start_line);
+        if(result == NO_REQUEST)
+        {
+            continue;
+        }   
+        else if(result == GET_REQUEST)
+        {
+			response_get(filename);
+            break;
+        }
+        else if(result == POST_REQUEST)
+        {
+            char argv[100];
+			memset(argv, 0, sizeof(argv));
+			int k = 0;
+			char *ch = NULL;
+            ++j;
+			while((ch = strstr(argv,"Content-Length")) == NULL)     //查找请求头部中的Content-Length行
 			{
-				response_get(filename);
-			}
-			else if(strcasecmp(method,"POST") == 0)     //如果是post方法
-			{
-				char argv[100];
-				memset(argv, 0, sizeof(argv));
-				int k = 0;
-				char *ch = NULL;
-				++j;
-				while((ch = strstr(argv,"Content-Length")) == NULL)     //查找请求头部中的Content-Length行
-				{
-					k = 0;
-					memset(argv, 0, sizeof(argv));
-					while(buf[j] != '\r' && buf[j] != '\0')             //不是换行不是结束
-					{
-						argv[k++] = buf[j++];
-					}
-					j++;
-				}
-				int len = 0;
-				char *ss = strchr(argv, ':');          //post请求数据长度
-				ss++;
-				sscanf(ss, "%d", &len);
-				j = strlen(buf) - len;               //从尾部获取请求数据
 				k = 0;
-				memset(argv, 0, sizeof(argv));
-				while(buf[j] != '\r' && buf[j] != '\0')
+                memset(argv, 0, sizeof(argv));
+				while(buffer[j] != '\r' && buffer[j] != '\0')             //不是换行不是结束
 				{
-					argv[k++] = buf[j++];
+					argv[k++] = buffer[j++];
 				}
-				argv[k] = '\0';
-				response_post(filename, argv);          //post
+                j++;
 			}
-			else    //其他方法
+			int len = 0;
+			char *ss = strchr(argv, ':');          //post请求数据长度
+			ss++;
+            sscanf(ss, "%d", &len);
+			j = strlen(buffer) - len;               //从尾部获取请求数据
+			k = 0;
+            cout << len << " " << j << endl;
+			memset(argv, 0, sizeof(argv));
+            while(buffer[j] != '\r' && buffer[j] != '\0')
 			{
-				char message[BUFFER_SIZE];
-				sprintf(message,"<html><title>RookieWeb Error</title>");
-				sprintf(message,"%s<body>\r\n", message);
-				sprintf(message,"%s 501\r\n", message);
-				sprintf(message,"%s <p>%s: Httpd does not implement this method",message,method);
-				sprintf(message,"%s<hr><h3>The RookieWeb Web Server<h3></body>", message);
-				response_err(message, 501);
+				argv[k++] = buffer[j++];
 			}
-		}
- 		else if(size < 0)   //读取失败，重新读取
-		{
-			continue;
-		}
-
-        close(connfd);
-        break;
+            argv[k] = '\0';
+			response_post(filename, argv);          //post
+            break;
+        }
+        else
+        {
+            char message[BUFFER_SIZE];
+			sprintf(message,"<html><title>RookieWeb Error</title>");
+			sprintf(message,"%s<body>\r\n", message);
+			sprintf(message,"%s 501\r\n", message);
+            sprintf(message,"%s <p>Httpd does not implement this method",message);
+			sprintf(message,"%s<hr><h3>The RookieWeb Web Server<h3></body>", message);
+			response_err(message, 501);
+            break;
+        }
     }
+    close(connfd);
 }
 
 #endif

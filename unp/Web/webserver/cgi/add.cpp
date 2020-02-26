@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 	{
 	 	//设置消息体
 		sprintf(body, "<html><title>add.action</title>");
-		sprintf(body, "%s<body bgcolor=""green"">\r\n", body);
+		sprintf(body, "%s<body bgcolor="""">\r\n", body);
 		sprintf(body, "%s %s\r\n", body, "200");
 		sprintf(body, "%s <p>%s: %s", body, "GET", "fail");
 		sprintf(body, "%s <p>The addition\r\n", body);
@@ -30,7 +30,7 @@ int main(int argc, char *argv[])
 	{
 		//设置消息体
 		sprintf(body, "<html><title>add.action</title>");
-		sprintf(body, "%s<body bgcolor=""green"">\r\n", body);
+		sprintf(body, "%s<body bgcolor="""">\r\n", body);
 		sprintf(body, "%s %s\r\n", body, "200");
 		sprintf(body, "%s <p>%s: %s", body, "GET", "success");
 		sprintf(body, "%s <p>The addition\r\n", body);

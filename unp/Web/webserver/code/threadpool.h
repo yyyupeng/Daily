@@ -50,7 +50,7 @@ threadpool<T>::threadpool(int num) : thread_num(num), threads(nullptr), m_stop(f
     //创建线程，并设置它们为脱离线程
     for(int i = 0; i < thread_num; ++i)
     {
-        std::cout << "create the " << i << "th thread" << std::endl;
+        //std::cout << "create the " << i << "th thread" << std::endl;
         if(pthread_create(&threads[i], NULL, worker, this) != 0)
         {
             //创建失败释放已分配资源
