@@ -25,6 +25,5 @@ private:
     std::shared_ptr<std::vector<std::string>> data;
     //如果data[i]不合法，抛出一个异常
     void check(size_type i, const std::string &msg) const;
-
 };
 
