@@ -1,0 +1,1 @@
+cmd_/home/liyupeng/Daily/内核学习/hello/hello_kernel.ko := ld -r -m elf_x86_64  -z max-page-size=0x200000 -T ./scripts/module-common.lds --build-id  -o /home/liyupeng/Daily/内核学习/hello/hello_kernel.ko /home/liyupeng/Daily/内核学习/hello/hello_kernel.o /home/liyupeng/Daily/内核学习/hello/hello_kernel.mod.o ;  true
