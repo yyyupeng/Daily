@@ -1,0 +1,157 @@
+#ifndef _AVLTREE_H
+#define _AVLTREE_H
+
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+
+//求树的高度
+//int GetHeight(AVLNode<T> *root);
+
+template <class T>
+class AVLNode
+{
+public:
+    T key;
+    AVLNode<T> *left;
+    AVLNode<T> *right;
+    int height;
+
+    AVLNode(T value, AVLNode *l, AVLNode *r) : key(value), left(l), right(r), height(0) {}
+};
+
+template <class T>
+class AVLTree
+{
+public:
+    AVLNode<T> *root;
+    AVLTree() : root(nullptr) {}
+    ~AVLTree();
+    //插入节点
+    void Insert(AVLNode<T> *&root, T );
+    //删除节点
+    bool Delete(AVLNode<T>* &root, T );
+    //前序遍历
+    void InOrderTra(AVLNode<T> *root) const;
+
+private:
+    //求树的高度
+    //int GetHeight(AVLNode<T> *root);
+    AVLNode<T> *LL(AVLNode<T> *root);
+    AVLNode<T> *RR(AVLNode<T> *root);
+    AVLNode<T> *LR(AVLNode<T> *root);
+    AVLNode<T> *RL(AVLNode<T> *root);
+    //销毁AVLTree
+    void destory(AVLNode<T> *&root);
+};
+
+template <typename T>
+int GetHeight(AVLNode<T> *root)
+{
+    if(root != nullptr)
+        return root->height;
+    return 0;
+}
+
+template <typename T>
+AVLTree<T>::~AVLTree()
+{
+    cout << "销毁AVL树..." << endl;
+    destory(root);
+}
+
+template <typename T>
+AVLNode<T> * AVLTree<T>::LL(AVLNode<T> *root)
+{
+    AVLNode<T> *q = root->right;
+    root->right = q->left;
+    q->left = root;
+    root->height = max(GetHeight(root->left), GetHeight(root->right)) + 1;
+    q->height = max(GetHeight(q->left), GetHeight(q->right)) + 1;
+    return q;
+}
+
+template <typename T>
+AVLNode<T>* AVLTree<T>::RR(AVLNode<T> *root)
+{
+    AVLNode<T> *q = root->left;
+    root->left = q->right;
+    q->right = root;
+    root->height = max(GetHeight(root->left), GetHeight(root->right)) + 1;
+    q->height = max(GetHeight(q->left), GetHeight(q->right)) + 1;
+    return q;
+}
+
+template <typename T>
+AVLNode<T>* AVLTree<T>::LR(AVLNode<T> *root)
+{
+    LL(root->left);
+    return RR(root);
+}
+
+template <typename T>
+AVLNode<T>* AVLTree<T>::RL(AVLNode<T> *root)
+{
+    RR(root->left);
+    return LL(root);
+}
+
+template <typename T>
+void AVLTree<T>::Insert(AVLNode<T> *&root, T key)
+{
+    if(root == nullptr)
+        root = new AVLNode<T>(key, nullptr, nullptr);
+    else if(key < root->key)
+    {
+        Insert(root->left, key);
+        //判断平衡情况
+        if(GetHeight(root->left) - GetHeight(root->right) == 2)
+        {
+            if(key < root->left->key)
+                root = RR(root);
+            else
+                root = LR(root);
+        }
+    }
+    else if(key > root->key)
+    {
+        Insert(root->right, key);
+        //判断平衡情况
+        if(GetHeight(root->right) - GetHeight(root->left) == 2)
+        {
+            if(key > root->right->key)
+                root = LL(root);
+            else
+                root = RL(root);
+        }
+    }
+    else
+        cout << "添加失败！" << endl;
+
+    root->height = max(GetHeight(root->left), GetHeight(root->right)) + 1;
+}
+
+template <typename T>
+void AVLTree<T>::InOrderTra(AVLNode<T> *root) const
+{
+    if(root)
+    {
+        InOrderTra(root->left);
+        cout << root->key << ' ';
+        InOrderTra(root->right);
+    }
+}
+
+template <typename T>
+void AVLTree<T>::destory(AVLNode<T> *&root)
+{
+    if(root == nullptr)
+        return;
+    destory(root->left);
+    destory(root->right);
+    delete root;
+}
+
+#endif
+
