@@ -4,7 +4,7 @@
 #include <pthread.h>
 #include <semaphore.h>
 
-#define N 10            //p_s数目
+#define N 10            
 #define P(x)    sem_wait(&x)
 #define V(x)    sem_post(&x)
 
@@ -31,7 +31,7 @@ void *reader(void *arg)
     if(readcount == 1)
         P(sdata);
     V(srcount);
-
+    printf("I'm reader.\n");
     P(srcount);
     --readcount;
     if(readcount == 0)
@@ -44,7 +44,7 @@ void *reader(void *arg)
 void *writer(void *arg)
 {
     P(sdata);
-
+    printf("I'm writer.\n");
     V(sdata);
 
     return NULL;
@@ -52,23 +52,26 @@ void *writer(void *arg)
 
 int main()
 {
-    pthread_t id1[N];
-    pthread_t id2[N];
-
     sem_mutex_init();
-    
-    for(int i = 0; i < N; ++i)
-        pthread_create(&id1[i], NULL, reader, NULL);
-    
-    for(int i = 0; i < N; ++i)
-        pthread_create(&id2[i], NULL, writer, NULL);
 
+    pthread_t id[N];
+    int i = 0;
+    char ch;
+    while(1)
+    {
+        scanf("%c", &ch);
+        if(ch == 'q')
+            break;
+        if(ch == 'r')
+            pthread_create(&id[i++], NULL, reader, NULL);
+        else if(ch == 'w')
+            pthread_create(&id[i++], NULL, writer, NULL);
+    } 
+    
     sem_destroy(&sdata);
     sem_destroy(&srcount);
-    for(int i = 0; i < N; ++i)
-        pthread_join(id1[i],NULL);
-    for(int i = 0; i < N; ++i)
-        pthread_join(id2[i],NULL);
+    for(int j = 0; j < i; ++j)
+        pthread_join(id[j],NULL);
 
     return 0;
 }
