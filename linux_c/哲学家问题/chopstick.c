@@ -8,7 +8,7 @@
 
 /* 如果5位哲学家都吃上饭了就退出 */
 
-pthread_mutex_t chopstick[6];   //定义锁——1只筷子1个锁
+pthread_mutex_t chopstick[5];   //定义锁——1只筷子1个锁
 
 typedef struct _data
 {
