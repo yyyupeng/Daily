@@ -4,8 +4,8 @@
 #include <pthread.h>
 #include <semaphore.h>
 
-#define M 6             //*缓冲数目
-#define N 10            //p_s数目
+#define M 3             //*缓冲数目
+#define N 1            //p_s数目
 #define P(x)     sem_wait(&x)
 #define V(x)     sem_post(&x)
 
@@ -17,7 +17,6 @@ int buff[M];
 sem_t empty_sem;         
 sem_t full_sem;  
 sem_t buf;
-pthread_mutex_t mutex; 
 
 void sem_mutex_init()
 {
@@ -29,13 +28,6 @@ void sem_mutex_init()
         printf("sem init failed \n");
         exit(1);
     }
-    
-    int init4 = pthread_mutex_init(&mutex, NULL);
-    if(init4 != 0)
-    {
-        printf("mutex init failed \n");
-        exit(1);
-    }   
 }
 
 void print()
@@ -50,19 +42,15 @@ void *producer(void *arg)
 {
     while(1)
     {
-        sleep(1);
-
-        P(empty_sem);
         P(buf);
-        pthread_mutex_lock(&mutex);
-
+        P(empty_sem);
+        
         in = in % M;
         printf("(+)produce a product. buffer:");
 
         buff[in++] = 1;
         print();
-
-        pthread_mutex_unlock(&mutex);
+        
         V(full_sem);
         V(buf);
     }
@@ -73,19 +61,15 @@ void *consumer(void *arg)
 {
     while(1)
     {
-        sleep(2);
-
-        P(full_sem);
         P(buf);
-        pthread_mutex_lock(&mutex);
-
+        P(full_sem);
+        
         out = out % M;
         printf("(-)consume a product. buffer:");
 
         buff[out++] = 0;
         print();
-
-        pthread_mutex_unlock(&mutex);
+        
         V(empty_sem);
         V(buf);
     }

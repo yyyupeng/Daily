@@ -26,27 +26,33 @@ void sem_mutex_init()
 
 void *reader(void *arg)
 {
-    P(srcount);
-    ++readcount;
-    if(readcount == 1)
-        P(sdata);
-    V(srcount);
-    printf("I'm reader.\n");
-    P(srcount);
-    --readcount;
-    if(readcount == 0)
-        V(sdata);    
-    V(srcount);
-
+    while(1)
+    {
+        sleep(1);
+        P(srcount);
+        ++readcount;
+        if(readcount == 1)
+            P(sdata);
+        V(srcount);
+        printf("I'm reader.\n");
+        P(srcount);
+        --readcount;
+        if(readcount == 0)
+            V(sdata);    
+        V(srcount);
+    }
     return NULL;
 }
 
 void *writer(void *arg)
 {
-    P(sdata);
-    printf("I'm writer.\n");
-    V(sdata);
-
+    while(1)
+    {
+        sleep(2);
+        P(sdata);
+        printf("I'm writer.\n");
+        V(sdata);
+    }
     return NULL;
 }
 
@@ -54,24 +60,18 @@ int main()
 {
     sem_mutex_init();
 
-    pthread_t id[N];
-    int i = 0;
-    char ch;
-    while(1)
-    {
-        scanf("%c", &ch);
-        if(ch == 'q')
-            break;
-        if(ch == 'r')
-            pthread_create(&id[i++], NULL, reader, NULL);
-        else if(ch == 'w')
-            pthread_create(&id[i++], NULL, writer, NULL);
-    } 
-    
+    pthread_t id1[N], id2[N];
+    for(int i = 0; i < N; ++i)
+        pthread_create(&id1[i], NULL, reader, NULL);
+    for(int i = 0; i < N; ++i)
+        pthread_create(&id2[i], NULL, writer, NULL);
+
     sem_destroy(&sdata);
     sem_destroy(&srcount);
-    for(int j = 0; j < i; ++j)
-        pthread_join(id[j],NULL);
+    for(int i = 0; i < N; ++i)
+        pthread_join(id1[i],NULL);
+    for(int i = 0; i < N; ++i)
+        pthread_join(id2[i],NULL);
 
     return 0;
 }

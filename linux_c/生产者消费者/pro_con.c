@@ -56,7 +56,6 @@ void *consumer(void *arg)
 int main()
 {
     pthread_t pro,con;
-    int statu1,statu2;
 
     pthread_mutex_init(&mutex, NULL);
     pthread_cond_init(&full, NULL);
@@ -65,8 +64,8 @@ int main()
     pthread_create(&pro, NULL, producer, NULL);
     pthread_create(&con, NULL, consumer, NULL);
 
-    pthread_join(pro, (void *) &statu1);
-    pthread_join(con, (void *) &statu2);
+    pthread_join(pro, NULL);
+    pthread_join(con, NULL);
 
     return 0;
 }
