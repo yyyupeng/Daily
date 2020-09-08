@@ -24,7 +24,7 @@ void addfd(int epfd, int fd, bool one_shot)
 {
     epoll_event ev;
     ev.data.fd = fd;
-    ev.events = EPOLLIN | EPOLLET | EPOLLRDHUP;
+    ev.events = EPOLLIN | EPOLLET | EPOLLRDHUP; 
     if(one_shot)
     {
         ev.events |= EPOLLONESHOT;
@@ -97,6 +97,7 @@ int main()
         if(flag_happen == 1)
         {
             cout << "\n" << "Rookie server is shutting down..." << endl;
+            break;
         }
     }
     
