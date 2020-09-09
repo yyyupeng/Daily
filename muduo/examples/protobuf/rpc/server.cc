@@ -1,10 +1,8 @@
-#include <examples/protobuf/rpc/sudoku.pb.h>
+#include "examples/protobuf/rpc/sudoku.pb.h"
 
-#include <muduo/base/Logging.h>
-#include <muduo/net/EventLoop.h>
-#include <muduo/net/protorpc/RpcServer.h>
-
-#include <boost/bind.hpp>
+#include "muduo/base/Logging.h"
+#include "muduo/net/EventLoop.h"
+#include "muduo/net/protorpc/RpcServer.h"
 
 #include <unistd.h>
 
@@ -29,7 +27,7 @@ class SudokuServiceImpl : public SudokuService
   }
 };
 
-}
+}  // namespace sudoku
 
 int main()
 {

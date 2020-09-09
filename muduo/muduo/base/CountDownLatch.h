@@ -6,15 +6,13 @@
 #ifndef MUDUO_BASE_COUNTDOWNLATCH_H
 #define MUDUO_BASE_COUNTDOWNLATCH_H
 
-#include <muduo/base/Condition.h>
-#include <muduo/base/Mutex.h>
-
-#include <boost/noncopyable.hpp>
+#include "muduo/base/Condition.h"
+#include "muduo/base/Mutex.h"
 
 namespace muduo
 {
 
-class CountDownLatch : boost::noncopyable
+class CountDownLatch : noncopyable
 {
  public:
 
@@ -32,5 +30,5 @@ class CountDownLatch : boost::noncopyable
   int count_ GUARDED_BY(mutex_);
 };
 
-}
+}  // namespace muduo
 #endif  // MUDUO_BASE_COUNTDOWNLATCH_H

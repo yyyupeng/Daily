@@ -11,11 +11,10 @@
 #ifndef MUDUO_NET_ACCEPTOR_H
 #define MUDUO_NET_ACCEPTOR_H
 
-#include <boost/function.hpp>
-#include <boost/noncopyable.hpp>
+#include <functional>
 
-#include <muduo/net/Channel.h>
-#include <muduo/net/Socket.h>
+#include "muduo/net/Channel.h"
+#include "muduo/net/Socket.h"
 
 namespace muduo
 {
@@ -28,11 +27,10 @@ class InetAddress;
 ///
 /// Acceptor of incoming TCP connections.
 ///
-class Acceptor : boost::noncopyable
+class Acceptor : noncopyable
 {
  public:
-  typedef boost::function<void (int sockfd,
-                                const InetAddress&)> NewConnectionCallback;
+  typedef std::function<void (int sockfd, const InetAddress&)> NewConnectionCallback;
 
   Acceptor(EventLoop* loop, const InetAddress& listenAddr, bool reuseport);
   ~Acceptor();
@@ -40,8 +38,13 @@ class Acceptor : boost::noncopyable
   void setNewConnectionCallback(const NewConnectionCallback& cb)
   { newConnectionCallback_ = cb; }
 
-  bool listenning() const { return listenning_; }
   void listen();
+
+  bool listening() const { return listening_; }
+
+  // Deprecated, use the correct spelling one above.
+  // Leave the wrong spelling here in case one needs to grep it for error messages.
+  // bool listenning() const { return listening(); }
 
  private:
   void handleRead();
@@ -50,11 +53,11 @@ class Acceptor : boost::noncopyable
   Socket acceptSocket_;
   Channel acceptChannel_;
   NewConnectionCallback newConnectionCallback_;
-  bool listenning_;
+  bool listening_;
   int idleFd_;
 };
 
-}
-}
+}  // namespace net
+}  // namespace muduo
 
 #endif  // MUDUO_NET_ACCEPTOR_H

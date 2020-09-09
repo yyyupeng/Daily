@@ -1,10 +1,9 @@
-#include <muduo/base/Logging.h>
-#include <muduo/net/Channel.h>
-#include <muduo/net/EventLoop.h>
+#include "muduo/base/Logging.h"
+#include "muduo/net/Channel.h"
+#include "muduo/net/EventLoop.h"
 
+#include <functional>
 #include <map>
-
-#include <boost/bind.hpp>
 
 #include <stdio.h>
 #include <unistd.h>
@@ -47,14 +46,14 @@ class PeriodicTimer
       cb_(cb)
   {
     timerfdChannel_.setReadCallback(
-        boost::bind(&PeriodicTimer::handleRead, this));
+        std::bind(&PeriodicTimer::handleRead, this));
     timerfdChannel_.enableReading();
   }
 
   void start()
   {
     struct itimerspec spec;
-    bzero(&spec, sizeof spec);
+    memZero(&spec, sizeof spec);
     spec.it_interval = toTimeSpec(interval_);
     spec.it_value = spec.it_interval;
     int ret = ::timerfd_settime(timerfd_, 0 /* relative timer */, &spec, NULL);
@@ -83,7 +82,7 @@ class PeriodicTimer
   static struct timespec toTimeSpec(double seconds)
   {
     struct timespec ts;
-    bzero(&ts, sizeof ts);
+    memZero(&ts, sizeof ts);
     const int64_t kNanoSecondsPerSecond = 1000000000;
     const int kMinInterval = 100000;
     int64_t nanoseconds = static_cast<int64_t>(seconds * kNanoSecondsPerSecond);
@@ -106,8 +105,8 @@ int main(int argc, char* argv[])
   LOG_INFO << "pid = " << getpid() << ", tid = " << CurrentThread::tid()
            << " Try adjusting the wall clock, see what happens.";
   EventLoop loop;
-  PeriodicTimer timer(&loop, 1, boost::bind(print, "PeriodicTimer"));
+  PeriodicTimer timer(&loop, 1, std::bind(print, "PeriodicTimer"));
   timer.start();
-  loop.runEvery(1, boost::bind(print, "EventLoop::runEvery"));
+  loop.runEvery(1, std::bind(print, "EventLoop::runEvery"));
   loop.loop();
 }

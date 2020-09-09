@@ -14,12 +14,10 @@
 #include <set>
 #include <vector>
 
-#include <boost/noncopyable.hpp>
-
-#include <muduo/base/Mutex.h>
-#include <muduo/base/Timestamp.h>
-#include <muduo/net/Callbacks.h>
-#include <muduo/net/Channel.h>
+#include "muduo/base/Mutex.h"
+#include "muduo/base/Timestamp.h"
+#include "muduo/net/Callbacks.h"
+#include "muduo/net/Channel.h"
 
 namespace muduo
 {
@@ -34,7 +32,7 @@ class TimerId;
 /// A best efforts timer queue.
 /// No guarantee that the callback will be on time.
 ///
-class TimerQueue : boost::noncopyable
+class TimerQueue : noncopyable
 {
  public:
   explicit TimerQueue(EventLoop* loop);
@@ -45,14 +43,9 @@ class TimerQueue : boost::noncopyable
   /// repeats if @c interval > 0.0.
   ///
   /// Must be thread safe. Usually be called from other threads.
-  TimerId addTimer(const TimerCallback& cb,
+  TimerId addTimer(TimerCallback cb,
                    Timestamp when,
                    double interval);
-#ifdef __GXX_EXPERIMENTAL_CXX0X__
-  TimerId addTimer(TimerCallback&& cb,
-                   Timestamp when,
-                   double interval);
-#endif
 
   void cancel(TimerId timerId);
 
@@ -88,6 +81,6 @@ class TimerQueue : boost::noncopyable
   ActiveTimerSet cancelingTimers_;
 };
 
-}
-}
+}  // namespace net
+}  // namespace muduo
 #endif  // MUDUO_NET_TIMERQUEUE_H

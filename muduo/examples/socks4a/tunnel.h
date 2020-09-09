@@ -1,17 +1,14 @@
 #ifndef MUDUO_EXAMPLES_SOCKS4A_TUNNEL_H
 #define MUDUO_EXAMPLES_SOCKS4A_TUNNEL_H
 
-#include <muduo/base/Logging.h>
-#include <muduo/net/EventLoop.h>
-#include <muduo/net/InetAddress.h>
-#include <muduo/net/TcpClient.h>
-#include <muduo/net/TcpServer.h>
+#include "muduo/base/Logging.h"
+#include "muduo/net/EventLoop.h"
+#include "muduo/net/InetAddress.h"
+#include "muduo/net/TcpClient.h"
+#include "muduo/net/TcpServer.h"
 
-#include <boost/bind.hpp>
-#include <boost/enable_shared_from_this.hpp>
-
-class Tunnel : public boost::enable_shared_from_this<Tunnel>,
-               boost::noncopyable
+class Tunnel : public std::enable_shared_from_this<Tunnel>,
+               muduo::noncopyable
 {
  public:
   Tunnel(muduo::net::EventLoop* loop,
@@ -31,13 +28,17 @@ class Tunnel : public boost::enable_shared_from_this<Tunnel>,
 
   void setup()
   {
+    using std::placeholders::_1;
+    using std::placeholders::_2;
+    using std::placeholders::_3;
+
     client_.setConnectionCallback(
-        boost::bind(&Tunnel::onClientConnection, shared_from_this(), _1));
+        std::bind(&Tunnel::onClientConnection, shared_from_this(), _1));
     client_.setMessageCallback(
-        boost::bind(&Tunnel::onClientMessage, shared_from_this(), _1, _2, _3));
+        std::bind(&Tunnel::onClientMessage, shared_from_this(), _1, _2, _3));
     serverConn_->setHighWaterMarkCallback(
-        boost::bind(&Tunnel::onHighWaterMarkWeak,
-                    boost::weak_ptr<Tunnel>(shared_from_this()), kServer, _1, _2),
+        std::bind(&Tunnel::onHighWaterMarkWeak,
+                  std::weak_ptr<Tunnel>(shared_from_this()), kServer, _1, _2),
         1024*1024);
   }
 
@@ -67,13 +68,16 @@ class Tunnel : public boost::enable_shared_from_this<Tunnel>,
 
   void onClientConnection(const muduo::net::TcpConnectionPtr& conn)
   {
+    using std::placeholders::_1;
+    using std::placeholders::_2;
+
     LOG_DEBUG << (conn->connected() ? "UP" : "DOWN");
     if (conn->connected())
     {
       conn->setTcpNoDelay(true);
       conn->setHighWaterMarkCallback(
-          boost::bind(&Tunnel::onHighWaterMarkWeak,
-                      boost::weak_ptr<Tunnel>(shared_from_this()), kClient, _1, _2),
+          std::bind(&Tunnel::onHighWaterMarkWeak,
+                    std::weak_ptr<Tunnel>(shared_from_this()), kClient, _1, _2),
           1024*1024);
       serverConn_->setContext(conn);
       serverConn_->startRead();
@@ -114,6 +118,8 @@ class Tunnel : public boost::enable_shared_from_this<Tunnel>,
                        const muduo::net::TcpConnectionPtr& conn,
                        size_t bytesToSent)
   {
+    using std::placeholders::_1;
+
     LOG_INFO << (which == kServer ? "server" : "client")
              << " onHighWaterMark " << conn->name()
              << " bytes " << bytesToSent;
@@ -124,8 +130,8 @@ class Tunnel : public boost::enable_shared_from_this<Tunnel>,
       {
         clientConn_->stopRead();
         serverConn_->setWriteCompleteCallback(
-            boost::bind(&Tunnel::onWriteCompleteWeak,
-                        boost::weak_ptr<Tunnel>(shared_from_this()), kServer, _1));
+            std::bind(&Tunnel::onWriteCompleteWeak,
+                      std::weak_ptr<Tunnel>(shared_from_this()), kServer, _1));
       }
     }
     else
@@ -134,18 +140,18 @@ class Tunnel : public boost::enable_shared_from_this<Tunnel>,
       {
         serverConn_->stopRead();
         clientConn_->setWriteCompleteCallback(
-            boost::bind(&Tunnel::onWriteCompleteWeak,
-                        boost::weak_ptr<Tunnel>(shared_from_this()), kClient, _1));
+            std::bind(&Tunnel::onWriteCompleteWeak,
+                      std::weak_ptr<Tunnel>(shared_from_this()), kClient, _1));
       }
     }
   }
 
-  static void onHighWaterMarkWeak(const boost::weak_ptr<Tunnel>& wkTunnel,
+  static void onHighWaterMarkWeak(const std::weak_ptr<Tunnel>& wkTunnel,
                                   ServerClient which,
                                   const muduo::net::TcpConnectionPtr& conn,
                                   size_t bytesToSent)
   {
-    boost::shared_ptr<Tunnel> tunnel = wkTunnel.lock();
+    std::shared_ptr<Tunnel> tunnel = wkTunnel.lock();
     if (tunnel)
     {
       tunnel->onHighWaterMark(which, conn, bytesToSent);
@@ -168,11 +174,11 @@ class Tunnel : public boost::enable_shared_from_this<Tunnel>,
     }
   }
 
-  static void onWriteCompleteWeak(const boost::weak_ptr<Tunnel>& wkTunnel,
+  static void onWriteCompleteWeak(const std::weak_ptr<Tunnel>& wkTunnel,
                                   ServerClient which,
                                   const muduo::net::TcpConnectionPtr& conn)
   {
-    boost::shared_ptr<Tunnel> tunnel = wkTunnel.lock();
+    std::shared_ptr<Tunnel> tunnel = wkTunnel.lock();
     if (tunnel)
     {
       tunnel->onWriteComplete(which, conn);
@@ -184,6 +190,6 @@ class Tunnel : public boost::enable_shared_from_this<Tunnel>,
   muduo::net::TcpConnectionPtr serverConn_;
   muduo::net::TcpConnectionPtr clientConn_;
 };
-typedef boost::shared_ptr<Tunnel> TunnelPtr;
+typedef std::shared_ptr<Tunnel> TunnelPtr;
 
-#endif
+#endif  // MUDUO_EXAMPLES_SOCKS4A_TUNNEL_H

@@ -6,8 +6,8 @@
 #ifndef MUDUO_BASE_MUTEX_H
 #define MUDUO_BASE_MUTEX_H
 
-#include <muduo/base/CurrentThread.h>
-#include <boost/noncopyable.hpp>
+#include "muduo/base/CurrentThread.h"
+#include "muduo/base/noncopyable.h"
 #include <assert.h>
 #include <pthread.h>
 
@@ -89,7 +89,7 @@ extern void __assert_perror_fail (int errnum,
                                   const char *file,
                                   unsigned int line,
                                   const char *function)
-    __THROW __attribute__ ((__noreturn__));
+    noexcept __attribute__ ((__noreturn__));
 __END_DECLS
 #endif
 
@@ -118,7 +118,7 @@ namespace muduo
 //   mutable MutexLock mutex_;
 //   std::vector<int> data_ GUARDED_BY(mutex_);
 // };
-class CAPABILITY("mutex") MutexLock : boost::noncopyable
+class CAPABILITY("mutex") MutexLock : noncopyable
 {
  public:
   MutexLock()
@@ -166,10 +166,10 @@ class CAPABILITY("mutex") MutexLock : boost::noncopyable
  private:
   friend class Condition;
 
-  class UnassignGuard : boost::noncopyable
+  class UnassignGuard : noncopyable
   {
    public:
-    UnassignGuard(MutexLock& owner)
+    explicit UnassignGuard(MutexLock& owner)
       : owner_(owner)
     {
       owner_.unassignHolder();
@@ -204,7 +204,7 @@ class CAPABILITY("mutex") MutexLock : boost::noncopyable
 //   MutexLockGuard lock(mutex_);
 //   return data_.size();
 // }
-class SCOPED_CAPABILITY MutexLockGuard : boost::noncopyable
+class SCOPED_CAPABILITY MutexLockGuard : noncopyable
 {
  public:
   explicit MutexLockGuard(MutexLock& mutex) ACQUIRE(mutex)
@@ -223,7 +223,7 @@ class SCOPED_CAPABILITY MutexLockGuard : boost::noncopyable
   MutexLock& mutex_;
 };
 
-}
+}  // namespace muduo
 
 // Prevent misuse like:
 // MutexLockGuard(mutex_);

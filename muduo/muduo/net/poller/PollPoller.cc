@@ -6,11 +6,11 @@
 
 // Author: Shuo Chen (chenshuo at chenshuo dot com)
 
-#include <muduo/net/poller/PollPoller.h>
+#include "muduo/net/poller/PollPoller.h"
 
-#include <muduo/base/Logging.h>
-#include <muduo/base/Types.h>
-#include <muduo/net/Channel.h>
+#include "muduo/base/Logging.h"
+#include "muduo/base/Types.h"
+#include "muduo/net/Channel.h"
 
 #include <assert.h>
 #include <errno.h>
@@ -24,9 +24,7 @@ PollPoller::PollPoller(EventLoop* loop)
 {
 }
 
-PollPoller::~PollPoller()
-{
-}
+PollPoller::~PollPoller() = default;
 
 Timestamp PollPoller::poll(int timeoutMs, ChannelList* activeChannels)
 {

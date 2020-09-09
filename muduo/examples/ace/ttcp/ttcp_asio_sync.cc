@@ -1,6 +1,6 @@
-#include <examples/ace/ttcp/common.h>
+#include "examples/ace/ttcp/common.h"
 
-#include <muduo/base/Logging.h>
+#include "muduo/base/Logging.h"
 #include <boost/asio.hpp>
 #include <stdio.h>
 
@@ -28,7 +28,11 @@ void receive(const Options& opt)
 
     struct SessionMessage sessionMessage = { 0, 0 };
     boost::system::error_code error;
-    size_t nr = boost::asio::read(socket, boost::asio::buffer(&sessionMessage, sizeof sessionMessage), error);
+    size_t nr = boost::asio::read(socket, boost::asio::buffer(&sessionMessage, sizeof sessionMessage),
+#if BOOST_VERSION < 104700L
+                                  boost::asio::transfer_all(),
+#endif
+                                  error);
     if (nr != sizeof sessionMessage)
     {
       LOG_ERROR << "read session message: " << error.message();
@@ -41,21 +45,28 @@ void receive(const Options& opt)
            sessionMessage.number, sessionMessage.length);
     const int total_len = static_cast<int>(sizeof(int32_t) + sessionMessage.length);
     PayloadMessage* payload = static_cast<PayloadMessage*>(::malloc(total_len));
-    // std::unique_ptr<PayloadMessage, void (*)(void*)> freeIt(payload, ::free);
-    boost::shared_ptr<PayloadMessage> freeIt(payload, ::free);
+    std::unique_ptr<PayloadMessage, void (*)(void*)> freeIt(payload, ::free);
     assert(payload);
 
     for (int i = 0; i < sessionMessage.number; ++i)
     {
       payload->length = 0;
-      if (boost::asio::read(socket, boost::asio::buffer(&payload->length, sizeof(payload->length)), error) != sizeof(payload->length))
+      if (boost::asio::read(socket, boost::asio::buffer(&payload->length, sizeof(payload->length)),
+#if BOOST_VERSION < 104700L
+                            boost::asio::transfer_all(),
+#endif
+                            error) != sizeof(payload->length))
       {
         LOG_ERROR << "read length: " << error.message();
         exit(1);
       }
       payload->length = ntohl(payload->length);
       assert(payload->length == sessionMessage.length);
-      if (boost::asio::read(socket, boost::asio::buffer(payload->data, payload->length), error) != static_cast<size_t>(payload->length))
+      if (boost::asio::read(socket, boost::asio::buffer(payload->data, payload->length),
+#if BOOST_VERSION < 104700L
+                            boost::asio::transfer_all(),
+#endif
+                            error) != static_cast<size_t>(payload->length))
       {
         LOG_ERROR << "read payload data: " << error.message();
         exit(1);

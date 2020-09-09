@@ -1,24 +1,25 @@
-#include "plot.h"
+#include "examples/procmon/plot.h"
 
-#include <muduo/base/FileUtil.h>
-#include <muduo/base/Logging.h>
-#include <muduo/base/ProcessInfo.h>
-#include <muduo/net/EventLoop.h>
-#include <muduo/net/http/HttpRequest.h>
-#include <muduo/net/http/HttpResponse.h>
-#include <muduo/net/http/HttpServer.h>
+#include "muduo/base/FileUtil.h"
+#include "muduo/base/Logging.h"
+#include "muduo/base/ProcessInfo.h"
+#include "muduo/net/EventLoop.h"
+#include "muduo/net/http/HttpRequest.h"
+#include "muduo/net/http/HttpResponse.h"
+#include "muduo/net/http/HttpServer.h"
 
 #include <boost/algorithm/string/replace.hpp>
-#include <boost/bind.hpp>
 #include <boost/circular_buffer.hpp>
-#include <boost/type_traits/is_pod.hpp>
 
 #include <sstream>
+#include <type_traits>
 
 #include <dirent.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <sys/stat.h>
+#define __STDC_FORMAT_MACROS
+#include <inttypes.h>
 
 using namespace muduo;
 using namespace muduo::net;
@@ -83,9 +84,9 @@ struct StatData
   long rsslim;
 };
 
-BOOST_STATIC_ASSERT(boost::is_pod<StatData>::value);
+static_assert(std::is_pod<StatData>::value, "StatData should be POD.");
 
-class Procmon : boost::noncopyable
+class Procmon : noncopyable
 {
  public:
   Procmon(EventLoop* loop, pid_t pid, uint16_t port, const char* procname)
@@ -118,14 +119,14 @@ class Procmon : boost::noncopyable
       LOG_INFO << "Current dir: " << cwd;
     }
     }
-    bzero(&lastStatData_, sizeof lastStatData_);
-    server_.setHttpCallback(boost::bind(&Procmon::onRequest, this, _1, _2));
+    memZero(&lastStatData_, sizeof lastStatData_);
+    server_.setHttpCallback(std::bind(&Procmon::onRequest, this, _1, _2));
   }
 
   void start()
   {
     tick();
-    server_.getLoop()->runEvery(kPeriod_, boost::bind(&Procmon::tick, this));
+    server_.getLoop()->runEvery(kPeriod_, std::bind(&Procmon::tick, this));
     server_.start();
   }
 
@@ -251,7 +252,7 @@ class Procmon : boost::noncopyable
 
     response_.append("<p><table>");
     StatData statData;  // how about use lastStatData_ ?
-    bzero(&statData, sizeof statData);
+    memZero(&statData, sizeof statData);
     statData.parse(procname.end()+1, kbPerPage_);  // end is ')'
 
     appendTableRow("PID", pid);
@@ -320,7 +321,8 @@ class Procmon : boost::noncopyable
       if (::lstat(namelist[i]->d_name, &stat) == 0)
       {
         Timestamp mtime(stat.st_mtime * Timestamp::kMicroSecondsPerSecond);
-        appendResponse("%c %9ld %s %s", getDirType(namelist[i]->d_type), stat.st_size,
+        int64_t size = stat.st_size;
+        appendResponse("%c %9" PRId64 " %s %s", getDirType(namelist[i]->d_type), size,
                        mtime.toFormattedString(/*showMicroseconds=*/false).c_str(),
                        namelist[i]->d_name);
         if (namelist[i]->d_type == DT_LNK)
@@ -414,7 +416,7 @@ class Procmon : boost::noncopyable
       return;
     StringPiece procname = ProcessInfo::procname(stat);
     StatData statData;
-    bzero(&statData, sizeof statData);
+    memZero(&statData, sizeof statData);
     statData.parse(procname.end()+1, kbPerPage_);  // end is ')'
     if (ticks_ > 0)
     {

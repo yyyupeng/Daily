@@ -6,16 +6,16 @@
 
 // Author: Shuo Chen (chenshuo at chenshuo dot com)
 
-#include <muduo/net/EventLoop.h>
+#include "muduo/net/EventLoop.h"
 
-#include <muduo/base/Logging.h>
-#include <muduo/base/Mutex.h>
-#include <muduo/net/Channel.h>
-#include <muduo/net/Poller.h>
-#include <muduo/net/SocketsOps.h>
-#include <muduo/net/TimerQueue.h>
+#include "muduo/base/Logging.h"
+#include "muduo/base/Mutex.h"
+#include "muduo/net/Channel.h"
+#include "muduo/net/Poller.h"
+#include "muduo/net/SocketsOps.h"
+#include "muduo/net/TimerQueue.h"
 
-#include <boost/bind.hpp>
+#include <algorithm>
 
 #include <signal.h>
 #include <sys/eventfd.h>
@@ -54,7 +54,7 @@ class IgnoreSigPipe
 #pragma GCC diagnostic error "-Wold-style-cast"
 
 IgnoreSigPipe initObj;
-}
+}  // namespace
 
 EventLoop* EventLoop::getEventLoopOfCurrentThread()
 {
@@ -84,9 +84,8 @@ EventLoop::EventLoop()
   {
     t_loopInThisThread = this;
   }
-  
   wakeupChannel_->setReadCallback(
-      boost::bind(&EventLoop::handleRead, this));
+      std::bind(&EventLoop::handleRead, this));
   // we are always reading the wakeupfd
   wakeupChannel_->enableReading();
 }
@@ -120,16 +119,13 @@ void EventLoop::loop()
     }
     // TODO sort channel by priority
     eventHandling_ = true;
-    for (ChannelList::iterator it = activeChannels_.begin();
-        it != activeChannels_.end(); ++it)
+    for (Channel* channel : activeChannels_)
     {
-      currentActiveChannel_ = *it;
+      currentActiveChannel_ = channel;
       currentActiveChannel_->handleEvent(pollReturnTime_);
     }
     currentActiveChannel_ = NULL;
     eventHandling_ = false;
-
-    // 处理那些通过queueInLoop排队的函数
     doPendingFunctors();
   }
 
@@ -149,7 +145,7 @@ void EventLoop::quit()
   }
 }
 
-void EventLoop::runInLoop(const Functor& cb)
+void EventLoop::runInLoop(Functor cb)
 {
   if (isInLoopThread())
   {
@@ -157,15 +153,15 @@ void EventLoop::runInLoop(const Functor& cb)
   }
   else
   {
-    queueInLoop(cb);
+    queueInLoop(std::move(cb));
   }
 }
 
-void EventLoop::queueInLoop(const Functor& cb)
+void EventLoop::queueInLoop(Functor cb)
 {
   {
   MutexLockGuard lock(mutex_);
-  pendingFunctors_.push_back(cb);
+  pendingFunctors_.push_back(std::move(cb));
   }
 
   if (!isInLoopThread() || callingPendingFunctors_)
@@ -180,67 +176,22 @@ size_t EventLoop::queueSize() const
   return pendingFunctors_.size();
 }
 
-TimerId EventLoop::runAt(const Timestamp& time, const TimerCallback& cb)
-{
-  return timerQueue_->addTimer(cb, time, 0.0);
-}
-
-TimerId EventLoop::runAfter(double delay, const TimerCallback& cb)
-{
-  Timestamp time(addTime(Timestamp::now(), delay));
-  return runAt(time, cb);
-}
-
-TimerId EventLoop::runEvery(double interval, const TimerCallback& cb)
-{
-  Timestamp time(addTime(Timestamp::now(), interval));
-  return timerQueue_->addTimer(cb, time, interval);
-}
-
-#ifdef __GXX_EXPERIMENTAL_CXX0X__
-// FIXME: remove duplication
-void EventLoop::runInLoop(Functor&& cb)
-{
-  if (isInLoopThread())
-  {
-    cb();
-  }
-  else
-  {
-    queueInLoop(std::move(cb));
-  }
-}
-
-void EventLoop::queueInLoop(Functor&& cb)
-{
-  {
-  MutexLockGuard lock(mutex_);
-  pendingFunctors_.push_back(std::move(cb));  // emplace_back
-  }
-
-  if (!isInLoopThread() || callingPendingFunctors_)
-  {
-    wakeup();
-  }
-}
-
-TimerId EventLoop::runAt(const Timestamp& time, TimerCallback&& cb)
+TimerId EventLoop::runAt(Timestamp time, TimerCallback cb)
 {
   return timerQueue_->addTimer(std::move(cb), time, 0.0);
 }
 
-TimerId EventLoop::runAfter(double delay, TimerCallback&& cb)
+TimerId EventLoop::runAfter(double delay, TimerCallback cb)
 {
   Timestamp time(addTime(Timestamp::now(), delay));
   return runAt(time, std::move(cb));
 }
 
-TimerId EventLoop::runEvery(double interval, TimerCallback&& cb)
+TimerId EventLoop::runEvery(double interval, TimerCallback cb)
 {
   Timestamp time(addTime(Timestamp::now(), interval));
   return timerQueue_->addTimer(std::move(cb), time, interval);
 }
-#endif
 
 void EventLoop::cancel(TimerId timerId)
 {
@@ -280,10 +231,8 @@ void EventLoop::abortNotInLoopThread()
             << ", current thread id = " <<  CurrentThread::tid();
 }
 
-// 唤醒eventloop，不唤醒的话，eventloop会阻塞在epoll_wait接口
 void EventLoop::wakeup()
 {
-  // 这里可以看到，本质上是对wakeupFd_进行写操作，以触发其可读事件
   uint64_t one = 1;
   ssize_t n = sockets::write(wakeupFd_, &one, sizeof one);
   if (n != sizeof one)
@@ -305,36 +254,25 @@ void EventLoop::handleRead()
 void EventLoop::doPendingFunctors()
 {
   std::vector<Functor> functors;
-  // callingPendingFunctors_是个优化措施
-  // 标识了是否正在处理这些函数
-
-  // 因为doPendingFunctors是在eventloop的最后处理的
-  // 因此如果此项为false，且isInLoopThread为true
-  // 则说明稍后一定会调用doPendingFunctors处理这些函数的
-  // 这样可以减少调用一次wakeup，减少一次io读写。
   callingPendingFunctors_ = true;
 
-  // 这里也是个优化，因为我们不知道这些func会运行多久
-  // 这样可以减少加锁时长, 以免调用这些func时，时间太长，其他线程无法queueInloop
   {
   MutexLockGuard lock(mutex_);
   functors.swap(pendingFunctors_);
   }
 
-  for (size_t i = 0; i < functors.size(); ++i)
+  for (const Functor& functor : functors)
   {
-    functors[i]();
+    functor();
   }
   callingPendingFunctors_ = false;
 }
 
 void EventLoop::printActiveChannels() const
 {
-  for (ChannelList::const_iterator it = activeChannels_.begin();
-      it != activeChannels_.end(); ++it)
+  for (const Channel* channel : activeChannels_)
   {
-    const Channel* ch = *it;
-    LOG_TRACE << "{" << ch->reventsToString() << "} ";
+    LOG_TRACE << "{" << channel->reventsToString() << "} ";
   }
 }
 

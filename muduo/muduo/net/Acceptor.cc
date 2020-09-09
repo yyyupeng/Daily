@@ -6,14 +6,12 @@
 
 // Author: Shuo Chen (chenshuo at chenshuo dot com)
 
-#include <muduo/net/Acceptor.h>
+#include "muduo/net/Acceptor.h"
 
-#include <muduo/base/Logging.h>
-#include <muduo/net/EventLoop.h>
-#include <muduo/net/InetAddress.h>
-#include <muduo/net/SocketsOps.h>
-
-#include <boost/bind.hpp>
+#include "muduo/base/Logging.h"
+#include "muduo/net/EventLoop.h"
+#include "muduo/net/InetAddress.h"
+#include "muduo/net/SocketsOps.h"
 
 #include <errno.h>
 #include <fcntl.h>
@@ -28,7 +26,7 @@ Acceptor::Acceptor(EventLoop* loop, const InetAddress& listenAddr, bool reusepor
   : loop_(loop),
     acceptSocket_(sockets::createNonblockingOrDie(listenAddr.family())),
     acceptChannel_(loop, acceptSocket_.fd()),
-    listenning_(false),
+    listening_(false),
     idleFd_(::open("/dev/null", O_RDONLY | O_CLOEXEC))
 {
   assert(idleFd_ >= 0);
@@ -36,7 +34,7 @@ Acceptor::Acceptor(EventLoop* loop, const InetAddress& listenAddr, bool reusepor
   acceptSocket_.setReusePort(reuseport);
   acceptSocket_.bindAddress(listenAddr);
   acceptChannel_.setReadCallback(
-      boost::bind(&Acceptor::handleRead, this));
+      std::bind(&Acceptor::handleRead, this));
 }
 
 Acceptor::~Acceptor()
@@ -49,7 +47,7 @@ Acceptor::~Acceptor()
 void Acceptor::listen()
 {
   loop_->assertInLoopThread();
-  listenning_ = true;
+  listening_ = true;
   acceptSocket_.listen();
   acceptChannel_.enableReading();
 }

@@ -11,17 +11,16 @@
 #ifndef MUDUO_NET_TCPCONNECTION_H
 #define MUDUO_NET_TCPCONNECTION_H
 
-#include <muduo/base/StringPiece.h>
-#include <muduo/base/Types.h>
-#include <muduo/net/Callbacks.h>
-#include <muduo/net/Buffer.h>
-#include <muduo/net/InetAddress.h>
+#include "muduo/base/noncopyable.h"
+#include "muduo/base/StringPiece.h"
+#include "muduo/base/Types.h"
+#include "muduo/net/Callbacks.h"
+#include "muduo/net/Buffer.h"
+#include "muduo/net/InetAddress.h"
+
+#include <memory>
 
 #include <boost/any.hpp>
-#include <boost/enable_shared_from_this.hpp>
-#include <boost/noncopyable.hpp>
-#include <boost/scoped_ptr.hpp>
-#include <boost/shared_ptr.hpp>
 
 // struct tcp_info is in <netinet/tcp.h>
 struct tcp_info;
@@ -39,8 +38,8 @@ class Socket;
 /// TCP connection, for both client and server usage.
 ///
 /// This is an interface class, so don't expose too much details.
-class TcpConnection : boost::noncopyable,
-                      public boost::enable_shared_from_this<TcpConnection>
+class TcpConnection : noncopyable,
+                      public std::enable_shared_from_this<TcpConnection>
 {
  public:
   /// Constructs a TcpConnection with a connected sockfd
@@ -137,8 +136,8 @@ class TcpConnection : boost::noncopyable,
   StateE state_;  // FIXME: use atomic variable
   bool reading_;
   // we don't expose those classes to client.
-  boost::scoped_ptr<Socket> socket_;
-  boost::scoped_ptr<Channel> channel_;
+  std::unique_ptr<Socket> socket_;
+  std::unique_ptr<Channel> channel_;
   const InetAddress localAddr_;
   const InetAddress peerAddr_;
   ConnectionCallback connectionCallback_;
@@ -154,9 +153,9 @@ class TcpConnection : boost::noncopyable,
   //        bytesReceived_, bytesSent_
 };
 
-typedef boost::shared_ptr<TcpConnection> TcpConnectionPtr;
+typedef std::shared_ptr<TcpConnection> TcpConnectionPtr;
 
-}
-}
+}  // namespace net
+}  // namespace muduo
 
 #endif  // MUDUO_NET_TCPCONNECTION_H

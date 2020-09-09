@@ -6,21 +6,18 @@
 
 // Author: Shuo Chen (chenshuo at chenshuo dot com)
 
-#include <muduo/net/EventLoopThread.h>
+#include "muduo/net/EventLoopThread.h"
 
-#include <muduo/net/EventLoop.h>
-
-#include <boost/bind.hpp>
+#include "muduo/net/EventLoop.h"
 
 using namespace muduo;
 using namespace muduo::net;
-
 
 EventLoopThread::EventLoopThread(const ThreadInitCallback& cb,
                                  const string& name)
   : loop_(NULL),
     exiting_(false),
-    thread_(boost::bind(&EventLoopThread::threadFunc, this), name),
+    thread_(std::bind(&EventLoopThread::threadFunc, this), name),
     mutex_(),
     cond_(mutex_),
     callback_(cb)

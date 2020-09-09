@@ -6,27 +6,24 @@
 #ifndef MUDUO_BASE_THREAD_H
 #define MUDUO_BASE_THREAD_H
 
-#include <muduo/base/Atomic.h>
-#include <muduo/base/CountDownLatch.h>
-#include <muduo/base/Types.h>
+#include "muduo/base/Atomic.h"
+#include "muduo/base/CountDownLatch.h"
+#include "muduo/base/Types.h"
 
-#include <boost/function.hpp>
-#include <boost/noncopyable.hpp>
-#include <boost/shared_ptr.hpp>
+#include <functional>
+#include <memory>
 #include <pthread.h>
 
 namespace muduo
 {
-// 线程
-class Thread : boost::noncopyable
+
+class Thread : noncopyable
 {
  public:
-  typedef boost::function<void ()> ThreadFunc;
+  typedef std::function<void ()> ThreadFunc;
 
-  explicit Thread(const ThreadFunc&, const string& name = string());
-#ifdef __GXX_EXPERIMENTAL_CXX0X__
-  explicit Thread(ThreadFunc&&, const string& name = string());
-#endif
+  explicit Thread(ThreadFunc, const string& name = string());
+  // FIXME: make it movable in C++11
   ~Thread();
 
   void start();
@@ -53,5 +50,5 @@ class Thread : boost::noncopyable
   static AtomicInt32 numCreated_;
 };
 
-}
-#endif
+}  // namespace muduo
+#endif  // MUDUO_BASE_THREAD_H

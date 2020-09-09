@@ -1,6 +1,6 @@
-#include <muduo/base/AsyncLogging.h>
-#include <muduo/base/Logging.h>
-#include <muduo/base/Timestamp.h>
+#include "muduo/base/AsyncLogging.h"
+#include "muduo/base/Logging.h"
+#include "muduo/base/Timestamp.h"
 
 #include <stdio.h>
 #include <sys/resource.h>
@@ -53,7 +53,7 @@ int main(int argc, char* argv[])
 
   printf("pid = %d\n", getpid());
 
-  char name[256] = { 0 };
+  char name[256] = { '\0' };
   strncpy(name, argv[0], sizeof name - 1);
   muduo::AsyncLogging log(::basename(name), kRollSize);
   log.start();
