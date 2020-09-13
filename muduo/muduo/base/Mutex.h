@@ -152,6 +152,22 @@ class CAPABILITY("mutex") MutexLock : noncopyable
     assignHolder();
   }
 
+  }
+
+  ~MutexLock()
+  {
+    assert(holder_ == 0);
+    MCHECK(pthread_mutex_destroy(&mutex_));
+  }
+
+  // must be called when locked, i.e. for assertion
+  bool isLockedByThisThread() const
+  {
+    return holder_ == CurrentThread::tid();
+  }
+
+  void assertLocked() const ASSERT_CAPABILITY(this)
+
   void unlock() RELEASE()
   {
     unassignHolder();
