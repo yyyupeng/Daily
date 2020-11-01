@@ -152,7 +152,7 @@ void Http_conn::send()
 		outbuffer += "Content-Length: " + to_string(size) + "\r\n";
         outbuffer += "Server: WWQ's Web Server\r\n";
 		outbuffer += "\r\n";
-		if(!(getCache().get(path,outbuffer)))
+		if(!(getCache().get(path, outbuffer)))
         {
 			int src_fd = Open((storage + path).c_str(), O_RDONLY, 0);
 			char *src_addr = (char *)mmap(NULL, size, PROT_READ, MAP_PRIVATE, src_fd, 0);

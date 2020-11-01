@@ -20,27 +20,27 @@ MemoryPool::~MemoryPool()
 	}
 }
 
-
+//计算类型字节数超出指针多少(方便内存对齐)
 inline size_t MemoryPool::padPointer(char *p, size_t align)
 {
 	uintptr_t result = reinterpret_cast<uintptr_t>(p);
-	return ((align-result)%align);
+	return ((align - result) % align);
 }
-
 
 Slot *MemoryPool::allocateBlock()
 {
 	char *newBlock = NULL;
 	while(!(newBlock = reinterpret_cast<char *>(malloc(BlockSize))));
 	char *body = newBlock + sizeof(Slot);
+    //为了类型安全
 	size_t bodyPadding = padPointer(body, static_cast<size_t>(slot_size));
 	Slot *useSlot;
 	{
 		MutexLockGuard lock(m_other);
 		reinterpret_cast<Slot *>(newBlock)->next = currentBlock;
 		currentBlock = reinterpret_cast<Slot *>(newBlock);
-        currentSlot = reinterpret_cast<Slot *>(body+bodyPadding);
-		lastSlot = reinterpret_cast<Slot *>(newBlock+BlockSize-slot_size+1);
+        currentSlot = reinterpret_cast<Slot *>(body + bodyPadding);
+		lastSlot = reinterpret_cast<Slot *>(newBlock + BlockSize - slot_size + 1);
 		useSlot = currentSlot;
     	currentSlot += (slot_size >> 3);
 	}
