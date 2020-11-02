@@ -5,7 +5,7 @@
 int main(int argc, char *argv[])
 {
 	init_memorypool();
-	char conf[30] = "base/WebServer.conf";
+	const char *conf = "base/WebServer.conf";
 	getconf().init(conf);
 	getCache().init();
 	signal(SIGPIPE, SIG_IGN);

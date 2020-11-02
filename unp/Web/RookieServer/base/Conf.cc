@@ -12,7 +12,7 @@ Conf::Conf()
 {
 }
 
-void Conf::init(char *path)
+void Conf::init(const char *path)
 {
 	strncpy(conf, path, 99);
 	map<string,string> m;

@@ -19,12 +19,9 @@ private:
 	string storage;
 	string logfile;
 	int capacity;	
-	/* bool ssl; */
-	/* string sslcrtpath; */
-	/* string sslkeypath; */
 
 public:
-	void init(char *path);
+	void init(const char *path);
 	int getthreads();
 	string getport();
 	int getlistenq();
@@ -32,9 +29,6 @@ public:
 	string getlogfile();
 	int getkeepalive();
 	int getcapacity();
-	/* bool getssl(); */
-	/* string getsslcrtpath(); */
-	/* string getsslkeypath(); */
 	Conf();
 
 private:	

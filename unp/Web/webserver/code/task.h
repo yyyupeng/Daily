@@ -150,6 +150,7 @@ void task::response_post(char *text, char *ar)
     cout << ch << " " << argv << endl;
 	if(fork() == 0) 
 	{
+        cout << "fork" << endl;
 		dup2(connfd, STDOUT_FILENO);  
 		execl(temp, ch, argv, NULL); 
 	}
@@ -218,7 +219,8 @@ void task::doit()
 			memset(argv, 0, sizeof(argv));
 			int k = 0;
 			char *ch = NULL;
-            ++j;
+            j = 0;
+            cout << "j=" << j << endl;
 			while((ch = strstr(argv,"Content-Length")) == NULL)     //查找请求头部中的Content-Length行
 			{
 				k = 0;
@@ -229,6 +231,8 @@ void task::doit()
 				}
                 j++;
 			}
+            cout << "j=" << j << endl;
+            cout << argv << endl;
 			int len = 0;
 			char *ss = strchr(argv, ':');          //post请求数据长度
 			ss++;
