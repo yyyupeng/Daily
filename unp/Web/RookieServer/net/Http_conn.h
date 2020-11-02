@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../base/Packet.h"
-#include "Mimetype.h"
+#include "ContentType.h"
 #include "EventLoop.h"
 #include <string>
 #include <unordered_map>

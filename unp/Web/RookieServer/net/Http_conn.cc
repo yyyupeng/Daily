@@ -1,4 +1,5 @@
 #include "Http_conn.h"
+#include <wait.h>
 
 void Http_conn::initmsg()
 {
@@ -108,9 +109,9 @@ PARSESTATE Http_conn::parseSuccess()
 		keepalive = true;
 	int dot_pos = path.find('.');
 	if(string::npos == dot_pos)
-		filetype = Mimetype::getMime("default");
+		filetype = ContentType::getCont("default");
 	else
-		filetype = Mimetype::getMime(path.substr(dot_pos));
+		filetype = ContentType::getCont(path.substr(dot_pos));
 	channel->setWritehandler(bind(&Http_conn::send, this));
 	header.clear();
 	return PARSE_METHOD;
@@ -127,8 +128,9 @@ void Http_conn::parse()
         channel->setDeleted(true);
         channel->getLoop().lock()->addTimer(channel, 0);
 		return;
-        //读到RST和FIN默认FIN处理方式，这里的话因为我不太清楚读到RST该怎么处理，就一起这样处理好了
+        //读到RST和FIN默认FIN处理方式
     }
+    cout << inbuffer << endl;
 	while(inbuffer.length() && ~inbuffer.find("\r\n", pos))
 		parsestate = handleparse[parsestate]();
 }
@@ -138,7 +140,23 @@ void Http_conn::send()
 	string outbuffer = "";
 	if(METHOD_POST == method)
     {
+        const char *path_ = "/home/liyupeng/Daily/unp/Web/RookieServer/test/cgi/add";
+        const char *arg_ = "add";
+        const char *buffer = inbuffer.c_str();
+        char argv[100];
+        int a, b;
+        sscanf(buffer, "a=%d&b=%d", &a, &b);
+        sprintf(argv, "%d&%d", a, b);
+        if(fork() == 0)
+        {
+            dup2(channel->getFd(), STDOUT_FILENO);
+            execl(path_, arg_, argv, NULL);
+        }
+        wait(NULL);
 
+	    initmsg();
+	    channel->setRevents(EPOLLIN | EPOLLET);
+	    channel->getLoop().lock()->updatePoller(channel);
 	}
 	else if(METHOD_GET == method)
     {
@@ -150,7 +168,7 @@ void Http_conn::send()
 		}
 		outbuffer += "Content-Type: " + filetype + "\r\n";
 		outbuffer += "Content-Length: " + to_string(size) + "\r\n";
-        outbuffer += "Server: WWQ's Web Server\r\n";
+        outbuffer += "Server: Rookie Web Server\r\n";
 		outbuffer += "\r\n";
 		if(!(getCache().get(path, outbuffer)))
         {
@@ -164,7 +182,7 @@ void Http_conn::send()
 		}
 	}
 	const char *buffer = outbuffer.c_str();
-	if(!writen(channel->getFd(),buffer,outbuffer.length()))
+	if(!writen(channel->getFd(), buffer, outbuffer.length()))
 		LOG << "writen error";
 	initmsg();
 	channel->setRevents(EPOLLIN | EPOLLET);
@@ -178,12 +196,12 @@ void Http_conn::handleError(int errornum, string msg)
 	body += "<head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"></head>";
 	body += "<body bgcolor=\"ffffff\">";
 	body += to_string(errornum) + msg;
-    body += "<hr><em> WWQ's Web Server</em>\n</body></html>";
+    body += "<hr><em> Rookie Web Server</em>\n</body></html>";
 	string outbuffer = "HTTP/1.1 " + to_string(errornum) + msg + "\r\n";
     outbuffer += "Content-Type: text/html\r\n";
     outbuffer += "Connection: Close\r\n";
     outbuffer += "Content-Length: " + to_string(body.size()) + "\r\n";
-    outbuffer += "Server: WWQ's Web Server\r\n";;
+    outbuffer += "Server: Rookie Web Server\r\n";;
     outbuffer += "\r\n";	
 	outbuffer +=body;
     const char *buffer = outbuffer.c_str();

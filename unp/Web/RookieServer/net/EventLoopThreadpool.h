@@ -3,7 +3,7 @@
 #include "../base/ThreadEventLoop.h"
 #include "../base/MemoryPool.h"
 
-class ThreadpoolEventLoop
+class EventLoopThreadpool
 {
 private:
 	vector<SP_ThreadEventLoop> threads;	
@@ -11,10 +11,10 @@ private:
 	int index;
 
 public:
-	ThreadpoolEventLoop(int Threadnum);
-	~ThreadpoolEventLoop();
+	EventLoopThreadpool(int Threadnum);
+	~EventLoopThreadpool();
 	void start();
 	SP_EventLoop getNextloop();
 };
 
-typedef std::unique_ptr<ThreadpoolEventLoop, decltype(deleteElement<ThreadpoolEventLoop>)*> UP_ThreadpoolEventLoop;
+typedef std::unique_ptr<EventLoopThreadpool, decltype(deleteElement<EventLoopThreadpool>)*> UP_EventLoopThreadpool;

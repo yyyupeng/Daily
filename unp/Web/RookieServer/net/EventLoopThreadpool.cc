@@ -1,6 +1,6 @@
 #include "EventLoopThreadpool.h"
 
-ThreadpoolEventLoop::ThreadpoolEventLoop(int Threadnum)
+EventLoopThreadpool::EventLoopThreadpool(int Threadnum)
 :	threadnum(Threadnum),
 	index(0)
 {
@@ -12,18 +12,18 @@ ThreadpoolEventLoop::ThreadpoolEventLoop(int Threadnum)
 	}	
 }
 
-ThreadpoolEventLoop::~ThreadpoolEventLoop()
+EventLoopThreadpool::~EventLoopThreadpool()
 {
 	threads.clear();
 }
 
-void ThreadpoolEventLoop::start()
+void EventLoopThreadpool::start()
 {
 	for(auto& temp : threads)
 		temp->start();
 }
 
-SP_EventLoop ThreadpoolEventLoop::getNextloop()
+SP_EventLoop EventLoopThreadpool::getNextloop()
 {
 	index = (index + 1) % threadnum;
 	return threads[index]->getLoop();

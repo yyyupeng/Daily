@@ -11,7 +11,7 @@ class Server
 private:
 	SP_EventLoop loop;
 	SP_Channel serverchannel;
-	UP_ThreadpoolEventLoop iothreadpool;
+	UP_EventLoopThreadpool iothreadpool;
 	int listenfd;
 	std::unordered_map<int, SP_Http_conn> Httpmap;	
 	void handleconn();

@@ -3,7 +3,7 @@
 Server::Server(const char *port, int threadnum)
 :	loop(newElement<EventLoop>(), deleteElement<EventLoop>),
 	serverchannel(newElement<Channel>(loop), deleteElement<Channel>),
-	iothreadpool(newElement<ThreadpoolEventLoop>(threadnum), deleteElement<ThreadpoolEventLoop>)
+	iothreadpool(newElement<EventLoopThreadpool>(threadnum), deleteElement<EventLoopThreadpool>)
 {
 	listenfd = tcp_listen(NULL, port, NULL);
 	setnonblocking(listenfd);
