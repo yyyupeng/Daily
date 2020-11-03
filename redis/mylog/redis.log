@@ -1,0 +1,31 @@
+24045:C 03 Nov 2020 16:34:14.454 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+24045:C 03 Nov 2020 16:34:14.454 # Redis version=6.0.9, bits=64, commit=60402372, modified=0, pid=24045, just started
+24045:C 03 Nov 2020 16:34:14.455 # Configuration loaded
+24045:M 03 Nov 2020 16:34:14.460 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 6.0.9 (60402372/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                   
+ (    '      ,       .-`  | `,    )     Running in standalone mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
+ |    `-._   `._    /     _.-'    |     PID: 24045
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           http://redis.io        
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+24045:M 03 Nov 2020 16:34:14.464 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
+24045:M 03 Nov 2020 16:34:14.464 # Server initialized
+24045:M 03 Nov 2020 16:34:14.464 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+24045:M 03 Nov 2020 16:34:14.466 * Ready to accept connections
+24045:M 03 Nov 2020 16:34:29.295 # User requested shutdown...
+24045:M 03 Nov 2020 16:34:29.295 * Saving the final RDB snapshot before exiting.
+24045:M 03 Nov 2020 16:34:29.345 * DB saved on disk
+24045:M 03 Nov 2020 16:34:29.345 * Removing the pid file.
+24045:M 03 Nov 2020 16:34:29.345 # Redis is now ready to exit, bye bye...
