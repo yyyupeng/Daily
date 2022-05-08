@@ -109,16 +109,22 @@ def print_evt(cpu, data, size):
 
     # 获取系统当前拥塞控制算法
     cca = subprocess.check_output("cat /proc/sys/net/ipv4/tcp_congestion_control", shell=True).decode()
+    if cca.find("bbr") >= 0:
+        cca = "bbr"
+    elif cca.find("reno") >= 0: 
+        cca = "reno"
+    elif cca.find("cubic") >= 0: 
+        cca = "cubic"
 
-    # 写入mysql
-    into = "INSERT INTO tcp_show(state, ca_state, saddr, daddr, cwnd, cca) VALUES (%d, %d, %s, %s, %d, %s)"
-    values = (evt.state, evt.ca_state,
+    # 执行sql语句
+    cur.execute("INSERT INTO tcp_show(state, ca_state, saddr, daddr, cwnd, cca) VALUES (%s, %s, '%s', '%s', %s, '%s');" % (
+        evt.state, evt.ca_state,
         socket.inet_ntoa(struct.pack('I',socket.htonl(evt.saddr))),
         socket.inet_ntoa(struct.pack('I',socket.htonl(evt.daddr))),
-        evt.cwnd, cca)
-    cur.execute(into, values)
+        evt.cwnd, cca))
     conn.commit()
 
+    # 命令行打印
     print("state: %d, ca_state: %d, saddr: %s, daddr: %s, cwnd: %u, cca: %s" %(
         evt.state, 
         evt.ca_state,
@@ -143,6 +149,3 @@ while True:
 
 # 关闭mysql连接
 conn.close()
-
-
-
