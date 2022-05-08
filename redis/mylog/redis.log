@@ -29,3 +29,234 @@
 24045:M 03 Nov 2020 16:34:29.345 * DB saved on disk
 24045:M 03 Nov 2020 16:34:29.345 * Removing the pid file.
 24045:M 03 Nov 2020 16:34:29.345 # Redis is now ready to exit, bye bye...
+20854:C 18 Feb 2021 22:06:23.961 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+20854:C 18 Feb 2021 22:06:23.974 # Redis version=6.0.9, bits=64, commit=60402372, modified=0, pid=20854, just started
+20854:C 18 Feb 2021 22:06:23.975 # Configuration loaded
+20854:M 18 Feb 2021 22:06:23.978 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 6.0.9 (60402372/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                   
+ (    '      ,       .-`  | `,    )     Running in standalone mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
+ |    `-._   `._    /     _.-'    |     PID: 20854
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           http://redis.io        
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+20854:M 18 Feb 2021 22:06:23.981 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
+20854:M 18 Feb 2021 22:06:23.981 # Server initialized
+20854:M 18 Feb 2021 22:06:23.981 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+20854:M 18 Feb 2021 22:06:23.983 * Ready to accept connections
+20854:M 18 Feb 2021 22:07:24.001 * 10000 changes in 60 seconds. Saving...
+20854:M 18 Feb 2021 22:07:24.001 * Background saving started by pid 20865
+20865:C 18 Feb 2021 22:07:24.035 * DB saved on disk
+20865:C 18 Feb 2021 22:07:24.036 * RDB: 0 MB of memory used by copy-on-write
+20854:M 18 Feb 2021 22:07:24.101 * Background saving terminated with success
+20854:M 18 Feb 2021 22:08:25.002 * 10000 changes in 60 seconds. Saving...
+20854:M 18 Feb 2021 22:08:25.003 * Background saving started by pid 21010
+21010:C 18 Feb 2021 22:08:25.037 * DB saved on disk
+21010:C 18 Feb 2021 22:08:25.038 * RDB: 0 MB of memory used by copy-on-write
+20854:M 18 Feb 2021 22:08:25.103 * Background saving terminated with success
+20854:M 18 Feb 2021 22:12:16.104 * 10000 changes in 60 seconds. Saving...
+20854:M 18 Feb 2021 22:12:16.104 * Background saving started by pid 22141
+22141:C 18 Feb 2021 22:12:16.145 * DB saved on disk
+22141:C 18 Feb 2021 22:12:16.146 * RDB: 0 MB of memory used by copy-on-write
+20854:M 18 Feb 2021 22:12:16.205 * Background saving terminated with success
+20854:M 18 Feb 2021 22:13:17.000 * 10000 changes in 60 seconds. Saving...
+20854:M 18 Feb 2021 22:13:17.000 * Background saving started by pid 22420
+22420:C 18 Feb 2021 22:13:17.049 * DB saved on disk
+22420:C 18 Feb 2021 22:13:17.049 * RDB: 0 MB of memory used by copy-on-write
+20854:M 18 Feb 2021 22:13:17.100 * Background saving terminated with success
+20854:M 18 Feb 2021 22:14:18.010 * 10000 changes in 60 seconds. Saving...
+20854:M 18 Feb 2021 22:14:18.011 * Background saving started by pid 22789
+22789:C 18 Feb 2021 22:14:18.101 * DB saved on disk
+22789:C 18 Feb 2021 22:14:18.102 * RDB: 0 MB of memory used by copy-on-write
+20854:M 18 Feb 2021 22:14:18.111 * Background saving terminated with success
+20854:M 18 Feb 2021 22:15:29.741 * 10000 changes in 60 seconds. Saving...
+20854:M 18 Feb 2021 22:15:29.741 * Background saving started by pid 23134
+23134:C 18 Feb 2021 22:15:29.812 * DB saved on disk
+23134:C 18 Feb 2021 22:15:29.812 * RDB: 0 MB of memory used by copy-on-write
+20854:M 18 Feb 2021 22:15:29.841 * Background saving terminated with success
+20854:M 18 Feb 2021 22:16:30.058 * 10000 changes in 60 seconds. Saving...
+20854:M 18 Feb 2021 22:16:30.059 * Background saving started by pid 23459
+23459:C 18 Feb 2021 22:16:30.112 * DB saved on disk
+23459:C 18 Feb 2021 22:16:30.114 * RDB: 0 MB of memory used by copy-on-write
+20854:M 18 Feb 2021 22:16:30.160 * Background saving terminated with success
+20854:M 18 Feb 2021 22:25:07.435 # User requested shutdown...
+20854:M 18 Feb 2021 22:25:07.435 * Saving the final RDB snapshot before exiting.
+20854:M 18 Feb 2021 22:25:07.478 * DB saved on disk
+20854:M 18 Feb 2021 22:25:07.478 * Removing the pid file.
+20854:M 18 Feb 2021 22:25:07.478 # Redis is now ready to exit, bye bye...
+10229:C 06 Mar 2021 16:02:59.566 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+10229:C 06 Mar 2021 16:02:59.578 # Redis version=6.0.9, bits=64, commit=60402372, modified=0, pid=10229, just started
+10229:C 06 Mar 2021 16:02:59.578 # Configuration loaded
+10229:M 06 Mar 2021 16:02:59.584 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 6.0.9 (60402372/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                   
+ (    '      ,       .-`  | `,    )     Running in standalone mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
+ |    `-._   `._    /     _.-'    |     PID: 10229
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           http://redis.io        
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+10229:M 06 Mar 2021 16:02:59.603 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
+10229:M 06 Mar 2021 16:02:59.603 # Server initialized
+10229:M 06 Mar 2021 16:02:59.604 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+10229:M 06 Mar 2021 16:02:59.640 * Loading RDB produced by version 6.0.9
+10229:M 06 Mar 2021 16:02:59.640 * RDB age 1359472 seconds
+10229:M 06 Mar 2021 16:02:59.640 * RDB memory usage when created 0.87 Mb
+10229:M 06 Mar 2021 16:02:59.640 * DB loaded from disk: 0.034 seconds
+10229:M 06 Mar 2021 16:02:59.641 * Ready to accept connections
+10229:M 06 Mar 2021 16:04:28.996 * 10000 changes in 60 seconds. Saving...
+10229:M 06 Mar 2021 16:04:28.996 * Background saving started by pid 10248
+10248:C 06 Mar 2021 16:04:29.056 * DB saved on disk
+10248:C 06 Mar 2021 16:04:29.056 * RDB: 0 MB of memory used by copy-on-write
+10229:M 06 Mar 2021 16:04:29.096 * Background saving terminated with success
+10229:M 06 Mar 2021 16:05:30.088 * 10000 changes in 60 seconds. Saving...
+10229:M 06 Mar 2021 16:05:30.088 * Background saving started by pid 10268
+10268:C 06 Mar 2021 16:05:30.139 * DB saved on disk
+10268:C 06 Mar 2021 16:05:30.142 * RDB: 0 MB of memory used by copy-on-write
+10229:M 06 Mar 2021 16:05:30.189 * Background saving terminated with success
+10229:M 06 Mar 2021 16:06:32.099 * 10000 changes in 60 seconds. Saving...
+10229:M 06 Mar 2021 16:06:32.099 * Background saving started by pid 10277
+10277:C 06 Mar 2021 16:06:32.151 * DB saved on disk
+10277:C 06 Mar 2021 16:06:32.151 * RDB: 0 MB of memory used by copy-on-write
+10229:M 06 Mar 2021 16:06:32.199 * Background saving terminated with success
+10229:M 06 Mar 2021 16:07:33.087 * 10000 changes in 60 seconds. Saving...
+10229:M 06 Mar 2021 16:07:33.088 * Background saving started by pid 10286
+10286:C 06 Mar 2021 16:07:33.137 * DB saved on disk
+10286:C 06 Mar 2021 16:07:33.138 * RDB: 0 MB of memory used by copy-on-write
+10229:M 06 Mar 2021 16:07:33.188 * Background saving terminated with success
+10229:M 06 Mar 2021 16:08:34.088 * 10000 changes in 60 seconds. Saving...
+10229:M 06 Mar 2021 16:08:34.089 * Background saving started by pid 10527
+10527:C 06 Mar 2021 16:08:34.134 * DB saved on disk
+10527:C 06 Mar 2021 16:08:34.137 * RDB: 0 MB of memory used by copy-on-write
+10229:M 06 Mar 2021 16:08:34.190 * Background saving terminated with success
+10229:M 06 Mar 2021 16:10:49.142 # User requested shutdown...
+10229:M 06 Mar 2021 16:10:49.142 * Saving the final RDB snapshot before exiting.
+10229:M 06 Mar 2021 16:10:49.212 * DB saved on disk
+10229:M 06 Mar 2021 16:10:49.212 * Removing the pid file.
+10229:M 06 Mar 2021 16:10:49.212 # Redis is now ready to exit, bye bye...
+13824:C 06 Mar 2021 16:20:01.917 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+13824:C 06 Mar 2021 16:20:01.917 # Redis version=6.0.9, bits=64, commit=60402372, modified=0, pid=13824, just started
+13824:C 06 Mar 2021 16:20:01.917 # Configuration loaded
+13824:M 06 Mar 2021 16:20:01.921 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 6.0.9 (60402372/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                   
+ (    '      ,       .-`  | `,    )     Running in standalone mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
+ |    `-._   `._    /     _.-'    |     PID: 13824
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           http://redis.io        
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+13824:M 06 Mar 2021 16:20:01.923 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
+13824:M 06 Mar 2021 16:20:01.923 # Server initialized
+13824:M 06 Mar 2021 16:20:01.923 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+13824:M 06 Mar 2021 16:20:01.924 * Loading RDB produced by version 6.0.9
+13824:M 06 Mar 2021 16:20:01.924 * RDB age 552 seconds
+13824:M 06 Mar 2021 16:20:01.924 * RDB memory usage when created 1.80 Mb
+13824:M 06 Mar 2021 16:20:01.929 * DB loaded from disk: 0.005 seconds
+13824:M 06 Mar 2021 16:20:01.929 * Ready to accept connections
+13824:M 06 Mar 2021 16:21:02.013 * 10000 changes in 60 seconds. Saving...
+13824:M 06 Mar 2021 16:21:02.014 * Background saving started by pid 13834
+13834:C 06 Mar 2021 16:21:02.052 * DB saved on disk
+13834:C 06 Mar 2021 16:21:02.054 * RDB: 0 MB of memory used by copy-on-write
+13824:M 06 Mar 2021 16:21:02.114 * Background saving terminated with success
+13824:M 06 Mar 2021 16:22:03.006 * 10000 changes in 60 seconds. Saving...
+13824:M 06 Mar 2021 16:22:03.006 * Background saving started by pid 13840
+13840:C 06 Mar 2021 16:22:03.055 * DB saved on disk
+13840:C 06 Mar 2021 16:22:03.056 * RDB: 0 MB of memory used by copy-on-write
+13824:M 06 Mar 2021 16:22:03.107 * Background saving terminated with success
+13824:M 06 Mar 2021 16:22:46.085 # User requested shutdown...
+13824:M 06 Mar 2021 16:22:46.085 * Saving the final RDB snapshot before exiting.
+13824:M 06 Mar 2021 16:22:46.123 * DB saved on disk
+13824:M 06 Mar 2021 16:22:46.123 * Removing the pid file.
+13824:M 06 Mar 2021 16:22:46.123 # Redis is now ready to exit, bye bye...
+15787:C 06 Mar 2021 16:30:05.370 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+15787:C 06 Mar 2021 16:30:05.370 # Redis version=6.0.9, bits=64, commit=60402372, modified=0, pid=15787, just started
+15787:C 06 Mar 2021 16:30:05.370 # Configuration loaded
+15787:M 06 Mar 2021 16:30:05.374 * Increased maximum number of open files to 10032 (it was originally set to 1024).
+                _._                                                  
+           _.-``__ ''-._                                             
+      _.-``    `.  `_.  ''-._           Redis 6.0.9 (60402372/0) 64 bit
+  .-`` .-```.  ```\/    _.,_ ''-._                                   
+ (    '      ,       .-`  | `,    )     Running in standalone mode
+ |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
+ |    `-._   `._    /     _.-'    |     PID: 15787
+  `-._    `-._  `-./  _.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |           http://redis.io        
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+ |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+ |    `-._`-._        _.-'_.-'    |                                  
+  `-._    `-._`-.__.-'_.-'    _.-'                                   
+      `-._    `-.__.-'    _.-'                                       
+          `-._        _.-'                                           
+              `-.__.-'                                               
+
+15787:M 06 Mar 2021 16:30:05.375 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
+15787:M 06 Mar 2021 16:30:05.376 # Server initialized
+15787:M 06 Mar 2021 16:30:05.376 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+15787:M 06 Mar 2021 16:30:05.377 * Loading RDB produced by version 6.0.9
+15787:M 06 Mar 2021 16:30:05.377 * RDB age 439 seconds
+15787:M 06 Mar 2021 16:30:05.377 * RDB memory usage when created 1.80 Mb
+15787:M 06 Mar 2021 16:30:05.382 * DB loaded from disk: 0.005 seconds
+15787:M 06 Mar 2021 16:30:05.382 * Ready to accept connections
+15787:M 06 Mar 2021 16:31:06.069 * 10000 changes in 60 seconds. Saving...
+15787:M 06 Mar 2021 16:31:06.069 * Background saving started by pid 16066
+16066:C 06 Mar 2021 16:31:06.116 * DB saved on disk
+16066:C 06 Mar 2021 16:31:06.118 * RDB: 0 MB of memory used by copy-on-write
+15787:M 06 Mar 2021 16:31:06.170 * Background saving terminated with success
+15787:M 06 Mar 2021 16:32:59.074 * 10000 changes in 60 seconds. Saving...
+15787:M 06 Mar 2021 16:32:59.074 * Background saving started by pid 16603
+16603:C 06 Mar 2021 16:32:59.114 * DB saved on disk
+16603:C 06 Mar 2021 16:32:59.114 * RDB: 0 MB of memory used by copy-on-write
+15787:M 06 Mar 2021 16:32:59.174 * Background saving terminated with success
+15787:M 06 Mar 2021 16:34:00.091 * 10000 changes in 60 seconds. Saving...
+15787:M 06 Mar 2021 16:34:00.091 * Background saving started by pid 16896
+16896:C 06 Mar 2021 16:34:00.172 * DB saved on disk
+16896:C 06 Mar 2021 16:34:00.175 * RDB: 0 MB of memory used by copy-on-write
+15787:M 06 Mar 2021 16:34:00.192 * Background saving terminated with success
+15787:M 06 Mar 2021 17:03:33.502 * 1 changes in 900 seconds. Saving...
+15787:M 06 Mar 2021 17:03:33.503 * Background saving started by pid 23950
+23950:C 06 Mar 2021 17:03:33.548 * DB saved on disk
+23950:C 06 Mar 2021 17:03:33.550 * RDB: 0 MB of memory used by copy-on-write
+15787:M 06 Mar 2021 17:03:33.603 * Background saving terminated with success
+15787:M 06 Mar 2021 17:04:34.011 * 10000 changes in 60 seconds. Saving...
+15787:M 06 Mar 2021 17:04:34.011 * Background saving started by pid 24231
+24231:C 06 Mar 2021 17:04:34.056 * DB saved on disk
+24231:C 06 Mar 2021 17:04:34.056 * RDB: 0 MB of memory used by copy-on-write
+15787:M 06 Mar 2021 17:04:34.111 * Background saving terminated with success
+15787:M 06 Mar 2021 17:08:41.124 # User requested shutdown...
+15787:M 06 Mar 2021 17:08:41.124 * Saving the final RDB snapshot before exiting.
+15787:M 06 Mar 2021 17:08:41.164 * DB saved on disk
+15787:M 06 Mar 2021 17:08:41.164 * Removing the pid file.
+15787:M 06 Mar 2021 17:08:41.164 # Redis is now ready to exit, bye bye...
