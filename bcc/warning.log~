@@ -1,0 +1,151 @@
+2022-04-25 11:24:32,711 - tcp_rcv.py - line:127 - INFO - cubic
+2022-04-25 11:24:32,934 - tcp_rcv.py - line:127 - INFO - cubic
+2022-04-25 11:24:34,215 - tcp_rcv.py - line:127 - INFO - cubic
+2022-04-25 11:24:34,252 - tcp_rcv.py - line:127 - INFO - cubic
+2022-04-25 19:56:29,319 - tcp_rcv.py - line:149 - INFO - cubic
+2022-04-25 19:56:29,353 - tcp_rcv.py - line:149 - INFO - cubic
+2022-04-25 19:56:29,386 - tcp_rcv.py - line:149 - INFO - cubic
+2022-04-25 19:56:29,399 - tcp_rcv.py - line:149 - INFO - cubic
+2022-04-25 19:56:29,408 - tcp_rcv.py - line:149 - INFO - cubic
+2022-04-25 19:56:34,225 - tcp_rcv.py - line:149 - INFO - cubic
+2022-04-25 19:56:37,641 - tcp_rcv.py - line:149 - INFO - cubic
+2022-04-25 19:56:37,963 - tcp_rcv.py - line:149 - INFO - cubic
+2022-04-25 19:56:38,416 - tcp_rcv.py - line:149 - INFO - cubic
+2022-04-25 19:56:38,638 - tcp_rcv.py - line:149 - INFO - cubic
+2022-04-25 19:56:38,645 - tcp_rcv.py - line:149 - INFO - cubic
+2022-04-25 19:56:38,728 - tcp_rcv.py - line:149 - INFO - cubic
+2022-04-25 19:56:38,930 - tcp_rcv.py - line:149 - INFO - cubic
+2022-04-25 19:56:39,937 - tcp_rcv.py - line:149 - INFO - cubic
+2022-04-25 19:56:40,351 - tcp_rcv.py - line:149 - INFO - cubic
+2022-04-25 19:56:40,777 - tcp_rcv.py - line:149 - INFO - cubic
+2022-04-25 19:56:40,787 - tcp_rcv.py - line:149 - INFO - cubic
+2022-04-25 19:56:41,142 - tcp_rcv.py - line:149 - INFO - cubic
+2022-04-25 19:56:41,148 - tcp_rcv.py - line:149 - INFO - cubic
+2022-04-25 19:56:42,062 - tcp_rcv.py - line:149 - INFO - cubic
+2022-04-25 19:56:42,791 - tcp_rcv.py - line:149 - INFO - cubic
+2022-04-26 08:56:39,289 - tcp_rcv.py - line:163 - INFO - cubic
+2022-04-26 08:56:39,593 - tcp_rcv.py - line:163 - INFO - cubic
+2022-04-26 08:56:39,610 - tcp_rcv.py - line:163 - INFO - cubic
+2022-04-26 09:14:20,959 - tcp_rcv.py - line:163 - INFO - cubic
+2022-04-26 09:14:22,572 - tcp_rcv.py - line:163 - INFO - cubic
+2022-04-26 09:14:25,366 - tcp_rcv.py - line:163 - INFO - cubic
+2022-05-08 17:58:14,690 - tcp_rcv.py - line:165 - INFO - cubic
+2022-05-08 17:58:14,909 - tcp_rcv.py - line:165 - INFO - cubic
+2022-05-08 17:58:25,018 - tcp_rcv.py - line:165 - INFO - cubic
+2022-05-08 17:58:25,250 - tcp_rcv.py - line:165 - INFO - cubic
+2022-05-08 18:11:19,164 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,164 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,170 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,170 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,187 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,187 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,194 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,195 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,241 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,241 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,247 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,247 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,255 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,255 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,262 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,262 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,269 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,270 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,275 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,275 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,280 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,280 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,287 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,287 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,294 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,294 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,299 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,300 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,307 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,308 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,313 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,313 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,323 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,323 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,328 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,328 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,335 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,336 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,342 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,342 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,349 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,350 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,356 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,357 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,362 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,363 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,370 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,370 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,376 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,376 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,500 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,500 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,521 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,522 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,576 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,576 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,584 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,584 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,595 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,595 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,606 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,606 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,615 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,615 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,626 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,626 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,647 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,648 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,654 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,654 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,666 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,666 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,832 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,833 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,840 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,840 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,847 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,847 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:19,857 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:19,857 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:21,122 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:21,123 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:21,131 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:21,131 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:21,165 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:21,166 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:21,173 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:21,173 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:21,364 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:21,365 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:22,281 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:22,283 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:22,302 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:22,303 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:11:22,692 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:11:22,694 - tcp_rcv.py - line:166 - INFO - irq/129-iwlwifi/488 network congestion warning
+2022-05-08 18:12:19,845 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:12:19,847 - tcp_rcv.py - line:166 - INFO - chrome/7295 network congestion warning
+2022-05-08 18:12:19,878 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:12:19,880 - tcp_rcv.py - line:166 - INFO - chrome/7295 network congestion warning
+2022-05-08 18:12:20,150 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:12:20,152 - tcp_rcv.py - line:166 - INFO - chrome/7295 network congestion warning
+2022-05-08 18:12:20,176 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:12:20,177 - tcp_rcv.py - line:166 - INFO - chrome/7295 network congestion warning
+2022-05-08 18:12:20,515 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:12:20,516 - tcp_rcv.py - line:166 - INFO - chrome/7295 network congestion warning
+2022-05-08 18:12:20,739 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:12:20,739 - tcp_rcv.py - line:166 - INFO - chrome/7295 network congestion warning
+2022-05-08 18:12:21,419 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:12:21,419 - tcp_rcv.py - line:166 - INFO - chrome/7295 network congestion warning
+2022-05-08 18:12:21,427 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:12:21,428 - tcp_rcv.py - line:166 - INFO - chrome/7295 network congestion warning
+2022-05-08 18:12:21,448 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:12:21,449 - tcp_rcv.py - line:166 - INFO - chrome/7295 network congestion warning
+2022-05-08 18:12:21,645 - tcp_rcv.py - line:160 - INFO - cubic
+2022-05-08 18:12:21,645 - tcp_rcv.py - line:166 - INFO - chrome/7295 network congestion warning
