@@ -9,7 +9,7 @@ import subprocess
 import socket
 import struct
 import pymysql
-pymysql.install_as_MySQLdb()
+import datetime
 
 """
 kernel-tcp_state
@@ -117,11 +117,12 @@ def print_evt(cpu, data, size):
         cca = "cubic"
 
     # 执行sql语句
-    cur.execute("INSERT INTO tcp_show(state, ca_state, saddr, daddr, cwnd, cca) VALUES (%s, %s, '%s', '%s', %s, '%s');" % (
+    dt = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    cur.execute("INSERT INTO tcp_show(state, ca_state, saddr, daddr, cwnd, cca, time) VALUES (%s, %s, '%s', '%s', %s, '%s', '%s');" % (
         evt.state, evt.ca_state,
         socket.inet_ntoa(struct.pack('I',socket.htonl(evt.saddr))),
         socket.inet_ntoa(struct.pack('I',socket.htonl(evt.daddr))),
-        evt.cwnd, cca))
+        evt.cwnd, cca, dt))
     conn.commit()
 
     # 命令行打印
@@ -142,7 +143,7 @@ cur = conn.cursor()
 b["info_evt"].open_perf_buffer(print_evt)
 while True:
     # 调用ss命令以触发tcp_diag模块
-    subprocess.check_output("ss -ta", shell=True)
+    subprocess.check_output("ss -t", shell=True)
     b.kprobe_poll()
     print("......\n")
     sleep(3)

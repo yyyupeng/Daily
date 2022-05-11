@@ -80,7 +80,7 @@ int tcp_rcv(struct pt_regs *ctx, struct sock *sk, struct sk_buff *skb)
     int pid = task->pid;
     int tgid = task->tgid;
 
-    if(pid != 488)
+    if(pid != 449)
     {
         struct rcv_evt evt = {
             .pid = pid,
@@ -167,7 +167,6 @@ def handle_cubic(evt, cwnd_record, mul_red_factor):
             logger.info('%s/%d network congestion warning' % (pid_to_comm(evt.tgid), evt.tgid))
         # 记录cwnd
         cwnd_record = evt.cwnd
-
 
 # 逻辑处理函数
 def handle_func(cpu, data, size):
