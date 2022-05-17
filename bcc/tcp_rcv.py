@@ -57,6 +57,7 @@ struct rcv_evt {
     int ca_state;
     u32 cwnd;
     u32 ssthresh;
+    unsigned long pacing_rate;
 };
 BPF_PERF_OUTPUT(rcv_evt);
 
@@ -80,7 +81,7 @@ int tcp_rcv(struct pt_regs *ctx, struct sock *sk, struct sk_buff *skb)
     int pid = task->pid;
     int tgid = task->tgid;
 
-    if(pid != 449)
+    if(pid != 547)
     {
         struct rcv_evt evt = {
             .pid = pid,
@@ -89,6 +90,7 @@ int tcp_rcv(struct pt_regs *ctx, struct sock *sk, struct sk_buff *skb)
             .ca_state = ca,
             .cwnd = tp->snd_cwnd,
             .ssthresh = tp->snd_ssthresh,
+            .pacing_rate = sk->sk_pacing_rate,
         };
         rcv_evt.perf_submit(ctx, &evt, sizeof(evt));
     }
@@ -118,6 +120,7 @@ class rcvEvt(ctypes.Structure):
         ("ca_state", ctypes.c_int),
         ("cwnd", ctypes.c_uint),
         ("ssthresh", ctypes.c_uint),
+        ("pacing_rate", ctypes.c_ulong),
     ]
 
 # 获取进程名称
@@ -135,9 +138,15 @@ def print_info(evt, cca):
     ))
 
 # bbr拥塞处理
-def handle_bbr(evt):
+def handle_bbr(evt, cwnd_record, pacing_rate_record):
     if __name__ == "__main__":
         logger.info('bbr')
+        # 是否发生拥塞
+        if evt.cwnd < cwnd_record and evt.pacing_rate < pacing_rate_record:
+            logger.info('%s/%d network congestion warning' % (pid_to_comm(evt.tgid), evt.tgid))
+        # 记录
+        cwnd_record = evt.cwnd
+        pacing_rate_record = evt.pacing_rate
 
 # reno拥塞处理
 def handle_reno(evt, cwnd_record):
@@ -176,11 +185,13 @@ def handle_func(cpu, data, size):
     cwnd_record = sys.maxsize
     # 乘法减小因子
     mul_red_factor = 0.2
+    # 记录pacing_rate
+    pacing_rate_record = -sys.maxsize - 1
     
     # 获取系统当前拥塞控制算法
     cmd = subprocess.check_output("cat /proc/sys/net/ipv4/tcp_congestion_control", shell=True).decode()
     if cmd.find("bbr") >= 0:
-        handle_bbr(evt)
+        handle_bbr(evt, cwnd_record, pacing_rate_record)
     elif cmd.find("reno") >= 0: 
         handle_reno(evt, cwnd_record)
     elif cmd.find("cubic") >= 0: 
