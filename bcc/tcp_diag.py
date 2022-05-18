@@ -117,6 +117,10 @@ def print_evt(cpu, data, size):
         cca = "cubic"
 
     # 执行sql语句
+    # 先删除原先数据
+    cur.execute("TRUNCATE TABLE tcp_show;")
+    conn.commit()
+    # 再插入最新数据
     dt = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     cur.execute("INSERT INTO tcp_show(state, ca_state, saddr, daddr, cwnd, cca, time) VALUES (%s, %s, '%s', '%s', %s, '%s', '%s');" % (
         evt.state, evt.ca_state,
